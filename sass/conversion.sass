@@ -1,0 +1,153 @@
+@import 'responsive'
+
+.conversion
+	position: sticky
+	z-index: 11
+	top: 54px
+	margin: 0 auto
+	background-color: #e17358
+	transition: 0.3s background-color
+	+media(lg)
+		top: 44px
+	+media(lgm)
+		top: 40px
+	
+	.main-nav__toggle
+		display: none
+		+media(xs)
+			display: block
+			margin-bottom: 7px
+
+	&__block
+		display: flex
+		justify-content: space-between
+		align-items: center
+		padding-top: 20px
+		+media(xs)
+			padding: 0 10px
+			padding-top: 20px
+
+	&.is-fixed
+		background-color: #fff
+
+		.container
+			max-width: 100%
+
+		.conversion__title
+			color: #010310
+
+		.visible-links
+			display: flex
+			+media(xs)
+				display: none
+
+		.hidden-links
+			background-color: #fff
+		
+		.conversion__holder
+			display: flex
+			width: 100%
+			align-items: center
+			+media(lgm)
+				display: block
+			
+		.conversion__link
+			color: #292929
+			font-weight: bold
+			&:hover:not(.conversion__link--active)
+				color: #e17358
+
+		.conversion__link--active
+			color: #e17358
+
+
+
+		.line-burger,
+		.line-burger:after,
+		.line-burger:before
+			+media(lgm)
+				background-color: #e17358
+		
+
+	&__title
+		font-size: 19px
+		color: #fff
+		margin-right: 20px
+		padding-bottom: 10px
+		font-weight: 500
+		+media(xxs)
+			font-size: 17px
+
+	&__list
+		padding-bottom: 10px
+		+media(lgm)
+			display: none
+			position: absolute
+			top: 100%
+			left: 0px
+			width: 100%
+			background-color: #e17358
+		li:not(:last-child)
+			margin-right: 20px
+			margin-bottom: 10px
+
+	&__nav 
+		display: flex
+		position: relative
+
+	&__link
+		display: block 
+		font-size: 18px 
+		color: #292929
+		text-decoration: none
+		padding: 20px 0
+		margin-right: 40px
+		transition: 0.3s color 
+		&:hover 
+			color: #ef6c00 
+
+		&--active
+			color: #fff
+		&:hover:not(.conversion__link--active)
+			color: #fff
+			text-decoration: underline
+
+	&__nav
+		button 
+			position: absolute 
+			height: 100% 
+			right: 0 
+			padding: 0 15px 
+			border: 0 
+			outline: none 
+			background-color: #f57c00 
+			color: #fff 
+			cursor: pointer 
+			&:hover 
+				background-color: #ef6c00 
+				&::after 
+					transform: scale(1.075)  
+
+
+.hidden-links 
+	position: absolute 
+	right: 0px 
+	top: 100% 
+	background-color: #e17358
+	li 
+		display: block 
+		padding: 0 20px
+
+.hidden 
+	visibility: hidden 
+	display: none
+
+.hamburger 
+	position: relative 
+	width: 32px 
+	height: 4px 
+	margin: auto 
+
+.visible-links
+	+media(xs)
+		display: none
