@@ -4250,6 +4250,7 @@ img {
 	justify-content: space-between;
 	align-items: center;
 	padding-top: 20px;
+	flex-shrink: 0;
 }
 
 .conversion.is-fixed {
@@ -4274,8 +4275,6 @@ img {
 
 .conversion.is-fixed .conversion__holder {
 	display: flex;
-	width: 100%;
-	align-items: center;
 }
 
 .conversion.is-fixed .conversion__link {
@@ -4310,7 +4309,7 @@ img {
 
 .conversion__nav {
 	display: flex;
-	position: relative;
+	flex-basis: 100%;
 }
 
 .conversion__link {
@@ -4321,6 +4320,21 @@ img {
 	padding: 20px 0;
 	margin-right: 40px;
 	transition: 0.3s color;
+}
+.is-fixed .visible-links .conversion__link {
+	white-space: nowrap;
+}
+.conversion:not(.is-fixed) .hamburger_wraper {
+	display: none;
+}
+.conversion:not(.is-fixed) .hidden-links {
+	display: none;
+}
+.conversion.is-fixed .conversion__link--hidden {
+	display: none;
+}
+.conversion.is-fixed .main-nav__toggle {
+	display: none;
 }
 
 .conversion__link:hover {
@@ -4547,7 +4561,7 @@ body {
 }
 
 .conversion.is-fixed .conversion__holder {
-	display: block;
+	position: relative;
 }
 
 .conversion.is-fixed .line-burger,
