@@ -3,7 +3,7 @@
 
 $(document).ready(function () {
 
-/*
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     let link = $('.conversion__link');
@@ -25,7 +25,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, {
   threshold: 0.3
-});*/
+});
 
 
 
@@ -35,7 +35,7 @@ let titles = $('.editor h2');
 let list = $('.visible-links');
 	// console.log(titles)
 for (let title of titles) {
- // observer.observe(title)
+	observer.observe(title)
 	$(title).attr('id', `${title.innerText.replace(/\s/gi, "_")}`);
 	let link = $(`<li><a class="conversion__link" href="${'#' + title.innerText.replace(/\s/gi, "_")}">${title.innerText}</li>`);
 	list.append(link);
@@ -127,17 +127,17 @@ window.addEventListener('scroll', () => {
 
 updateNav();
 
-$('.conversion__link').click(function() {
-  let elems = $('.conversion__link');
-  elems.each(function(index, item) {
-    $(item).removeClass('conversion__link--active')
-  });
-  $(this).addClass('conversion__link--active');
-  var target = $(this).attr('href');
-  $('html, body').animate({
-    scrollTop: $(target).offset().top - $('.main-header__menu').height() - $('.conversion').height()
-  }, 800);
-  return false;
+$('.conversion__nav').on("click", ".conversion__link", function() {
+	let elems = $('.conversion__link');
+	elems.each(function(index, item) {
+		$(item).removeClass('conversion__link--active')
+	});
+	$(this).addClass('conversion__link--active');
+	var target = $(this).attr('href');
+	$('html, body').animate({
+		scrollTop: $(target).offset().top - $('.main-header__menu').height() - $('.conversion').height()
+	}, 800);
+	return false;
 });
 
 $('.conversion .main-nav__toggle').on('click', function () {
