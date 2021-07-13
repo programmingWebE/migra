@@ -33,11 +33,12 @@ const observer = new IntersectionObserver((entries) => {
 
 let titles = $('.editor h2');
 let list = $('.visible-links');
+	// console.log(titles)
 for (let title of titles) {
  // observer.observe(title)
-  $(title).attr('id', `${title.outerText.replace(/\s/gi, "_")}`);
-  let link = $(`<li><a class="conversion__link" href="${'#'+title.outerText.replace(/\s/gi, "_")}">${title.outerText}</li>`);
-  list.append(link);
+	$(title).attr('id', `${title.innerText.replace(/\s/gi, "_")}`);
+	let link = $(`<li><a class="conversion__link" href="${'#' + title.innerText.replace(/\s/gi, "_")}">${title.innerText}</li>`);
+	list.append(link);
 }
 
   var $nav = $('.conversion__nav');
