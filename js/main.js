@@ -5,24 +5,24 @@ $(document).ready(function () {
 
 
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    let link = $('.conversion__link');
-    if (entry.isIntersecting) {
-      link.each(function(index, item) {
-        let elem = $(item).attr('href').replace('#', '');
-        let id = entry.target.id;
-        if (elem == id) {
-          $(item).addClass('conversion__link--active');
-        } else {
-          $(item).removeClass('conversion__link--active');
-        }
-      });
-    } else {
-        link.each(function(index, item) {
-            $(item).removeClass('conversion__link--active');
-        });
-    }
-  });
+	entries.forEach((entry) => {
+		var link = $(`.conversion__link[href='#${entry.target.id}']`);
+		if (entry.isIntersecting) {
+			// в зоне видимости появился заголовок
+			// делаем все пункты не активными
+			$(`.conversion__link`).each(function() {
+				$(this).removeClass('conversion__link--active');
+			});
+			// и делаем активными нужные
+			link.each(function() {
+				$(this).addClass('conversion__link--active');
+			})
+		} else {
+		    link.each(function() {
+				$(this).removeClass('conversion__link--active');
+		    });
+		}
+	});
 }, {
   threshold: 0.3
 });
@@ -100,7 +100,6 @@ function updateNav() {
 
 	// Recur if the visible list is still overflowing the nav
 	if($vlinks.width() > availableSpace ) {
-		console.log("проверка на зацикливание", $vlinks.width(), availableSpace)
 		updateNav();
 	}
 }
