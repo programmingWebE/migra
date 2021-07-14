@@ -116,11 +116,25 @@ $btn.on('click', function() {
 });
 
 
-const block = $('.conversion');
+const $block = $('.conversion');
+const $header__menu = $('.main-header__menu');
+const $bottom_block = $(".box--holder");
 window.addEventListener('scroll', () => {
-  const { top } = block[0].getBoundingClientRect();
-  let menuHeight = $('.main-header__menu').height();
-  block.toggleClass('is-fixed', top === menuHeight);
+    const { top } = $block[0].getBoundingClientRect();
+    let menuHeight = $header__menu.height();
+    let is = top === menuHeight;
+    if ($block.hasClass('is-fixed')) {
+        if (!is) {
+            $block.removeClass('is-fixed');
+            $bottom_block.css({ 'margin-top': 0 });
+        }
+    } else {
+        if (is) {
+            let h1 = $block.height();
+            $block.addClass('is-fixed');
+            $bottom_block.css({ 'margin-top': h1 - $block.height() });
+        }
+    }
     updateNav();
 });
 
