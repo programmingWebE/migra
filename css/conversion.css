@@ -16,6 +16,15 @@
 	justify-content: space-between;
 	align-items: center;
 	padding-top: 20px;
+	flex-shrink: 0;
+}
+
+.conversion:not(.is-fixed) .hamburger_wraper {
+	display: none;
+}
+
+.conversion:not(.is-fixed) .hidden-links {
+	display: none;
 }
 
 .conversion.is-fixed {
@@ -34,14 +43,16 @@
 	display: flex;
 }
 
+.conversion.is-fixed .visible-links .conversion__link {
+	white-space: nowrap;
+}
+
 .conversion.is-fixed .hidden-links {
 	background-color: #fff;
 }
 
 .conversion.is-fixed .conversion__holder {
 	display: flex;
-	width: 100%;
-	align-items: center;
 }
 
 .conversion.is-fixed .conversion__link {
@@ -57,11 +68,20 @@
 	color: #e17358;
 }
 
+.conversion.is-fixed .visible-links .conversion__link {
+	white-space: nowrap;
+}
+
+.conversion.is-fixed .conversion__link--hidden,
+.conversion.is-fixed .main-nav__toggle {
+	display: none;
+}
+
 .conversion__title {
 	font-size: 19px;
 	color: #fff;
 	margin-right: 20px;
-	padding-bottom: 10px;
+	padding-bottom: 20px;
 	font-weight: 500;
 }
 
@@ -76,7 +96,7 @@
 
 .conversion__nav {
 	display: flex;
-	position: relative;
+	flex-basis: 100%;
 }
 
 .conversion__link {
@@ -141,9 +161,29 @@
 
 .hamburger {
 	position: relative;
+	font-size: 18px;
 	width: 32px;
 	height: 4px;
 	margin: auto;
+}
+
+.hamburger:before,
+.hamburger:after {
+	display: none;
+	content: '';
+	position: absolute;
+	left: 0;
+	width: 32px;
+	height: 4px;
+	background: #fff;
+}
+
+.hamburger:before {
+	top: -8px;
+}
+
+.hamburger:after {
+	bottom: -8px;
 }
 
 @media screen and (max-width: 1430px) {
@@ -161,7 +201,7 @@
 }
 
 .conversion.is-fixed .conversion__holder {
-	display: block;
+	position: relative;
 }
 
 .conversion.is-fixed .line-burger,
@@ -177,6 +217,21 @@
 	left: 0px;
 	width: 100%;
 	background-color: #e17358;
+}
+
+.conversion__link {
+	padding: 10px 0;
+	margin-right: 0px;
+	margin: 0 10px;
+}
+
+.hamburger {
+	font-size: 0px;
+}
+
+.hamburger:before,
+.hamburger:after {
+	display: block;
 }
 
 }
@@ -197,7 +252,7 @@
 	display: none;
 }
 
-.visible-links {
+.hidden {
 	display: none;
 }
 
@@ -206,7 +261,7 @@
 @media screen and (max-width: 480px) {
 
 .conversion__title {
-	font-size: 17px;
+	font-size: 16px;
 }
 
 }
