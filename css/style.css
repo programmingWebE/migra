@@ -5801,14 +5801,6 @@ body {
 	padding: 15px;
 }
 
-.conversion.is-fixed .visible-links {
-	display: none;
-}
-
-.hidden {
-	display: none;
-}
-
 }
 
 @media screen and (max-width: 480px) {
