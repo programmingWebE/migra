@@ -112,15 +112,14 @@ window.addEventListener('scroll', () => {
 		if (!is) {
 			$block.removeClass('is-fixed');
 			$block.css({
-				'height': ""
+				'margin-bottom': ""
 			});
 		}
 	} else {
 		if (is) {
-			let h1 = $block.height();
 			$block.addClass('is-fixed');
 			$block.css({
-				'height': blockHight
+				'margin-bottom': blockHight - $block.height()
 			});
 		}
 	}

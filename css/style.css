@@ -4326,6 +4326,8 @@ img {
 	max-width: 1200px;
 	margin: 0 auto;
 	transition: 0.3s background-color;
+	display: inline-block;
+	width: 100%;
 }
 
 .conversion__block {
