@@ -1,49 +1,45 @@
 
-
-
 $(document).ready(function () {
 
+let stopWatchingObserver = false;
 
 const observer = new IntersectionObserver((entries) => {
-	entries.forEach((entry) => {
-		var link = $(`.conversion__link[href='#${entry.target.id}']`);
-		if (entry.isIntersecting) {
-			// в зоне видимости появился заголовок
-			// делаем все пункты не активными
-			$(`.conversion__link`).each(function() {
-				$(this).removeClass('conversion__link--active');
-			});
-			// и делаем активными нужные
-			link.each(function() {
-				$(this).addClass('conversion__link--active');
-			})
-		} else {
-		    link.each(function() {
-				$(this).removeClass('conversion__link--active');
-		    });
-		}
-	});
+  if (stopWatchingObserver == true) return;
+  entries.forEach((entry) => {
+    var link = $(`.conversion__link[href='#${entry.target.id}']`);
+    if (entry.isIntersecting) {
+      // в зоне видимости появился заголовок
+      // делаем все пункты не активными
+      $(`.conversion__link`).each(function() {
+        $(this).removeClass('conversion__link--active');
+      });
+      // и делаем активными нужные
+      link.each(function() {
+        $(this).addClass('conversion__link--active');
+      })
+    } else {
+      link.each(function() {
+        $(this).removeClass('conversion__link--active');
+      });
+    }
+  });
 }, {
-	rootMargin: '0px 0px -50% 0px',
-	threshold: 0.3
+  rootMargin: '0px 0px -50% 0px',
+  threshold: 0.3
 });
-
-
 
 // вывод пунктов меню
 
 let titles = $('.editor h2');
 let list = $('.visible-links');
-	// console.log(titles)
 for (let title of titles) {
-	observer.observe(title)
-	$(title).attr('id', `${title.innerText.replace(/\s/gi, "_")}`);
-	let link = $(`<li><a class="conversion__link" href="${'#' + title.innerText.replace(/\s/gi, "_")}">${title.innerText}</li>`);
-	list.append(link);
+  observer.observe(title)
+  $(title).attr('id', `${title.innerText.replace(/\s/gi, "_")}`);
+  let link = $(`<li><a class="conversion__link" href="${'#' + title.innerText.replace(/\s/gi, "_")}">${title.innerText}</li>`);
+  list.append(link);
 }
 
-// var $nav = $('.conversion__nav');
-var $btn = $('.conversion__nav button');
+var $btn = $('.hamburger_wraper');
 var $vlinks = $('.conversion__nav .visible-links');
 var $hlinks = $('.conversion__nav .hidden-links');
 
@@ -54,61 +50,48 @@ var $nav__block = $('.conversion__block');
 var breaks = [];
 
 function updateNav() {
-	// если меню не зафиксировано, то не нужно ничего делать
-	if (!$conversion.hasClass('is-fixed')) return;
+  // если меню не зафиксировано, то не нужно ничего делать
+  if (!$conversion.hasClass('is-fixed')) return;
 
-	// var availableSpace = $btn.hasClass('hidden') ? $nav.width() : $nav.width() - $btn.width() - 30;
-	var availableSpace = Math.max(($btn.hasClass('hidden') ? $nav__holder.width() : $nav__holder.width() - $btn.width() - 30) - $nav__block.width(), 0);
+  var availableSpace = Math.max(($btn.hasClass('hidden') ? $nav__holder.width() : $nav__holder.width() - $btn.width() - 30) - $nav__block.width(), 0);
 
-	// The visible list is overflowing the nav
-    if ($vlinks.width() > availableSpace || window.matchMedia('(max-width: 1350px)').matches) {
-		// Record the width of the list
-		breaks.push($vlinks.width());
+  if ($vlinks.width() > availableSpace || window.matchMedia('(max-width: 1350px)').matches) {
+    breaks.push($vlinks.width());
 
-		var $last = $vlinks.children(":not(.conversion__link--hidden)").last();
-		// Move item to the hidden list
-		$last.clone().prependTo($hlinks);
-		// скрываем пункт, а не переносим, как было ранее. Это позволит отобразать его с помощью css, когда меню отфиксируется
-		$last.addClass('conversion__link--hidden');
+    var $last = $vlinks.children(":not(.conversion__link--hidden)").last();
+    $last.clone().prependTo($hlinks);
+    // скрываем пункт, а не переносим, как было ранее. Это позволит отобразать его с помощью css, когда меню отфиксируется
+    $last.addClass('conversion__link--hidden');
 
-		// Show the dropdown btn
-		if($btn.hasClass('hidden')) {
-			$btn.removeClass('hidden');
-		}
+    if ($btn.hasClass('hidden')) {
+      $btn.removeClass('hidden');
+    }
 
-	// The visible list is not overflowing
-	} else {
+  } else {
 
-		// There is space for another item in the nav
-		if(availableSpace > breaks[breaks.length-1]) {
+    if (availableSpace > breaks[breaks.length - 1]) {
 
-			// Удаляем из скрытого меню
-			$hlinks.children().first().remove();
-			// отображаем в зафиксированном меню
-			$vlinks.children(".conversion__link--hidden").first().removeClass('conversion__link--hidden');
-			breaks.pop();
-		}
+      // Удаляем из скрытого меню
+      $hlinks.children().first().remove();
+      // отображаем в зафиксированном меню
+      $vlinks.children(".conversion__link--hidden").first().removeClass('conversion__link--hidden');
+      breaks.pop();
+    }
 
-		// Hide the dropdown btn if hidden list is empty
-		if(breaks.length < 1) {
-			$btn.addClass('hidden');
-			$hlinks.addClass('hidden');
-		}
-	}
+    if (breaks.length < 1) {
+      $btn.addClass('hidden');
+      $hlinks.addClass('hidden');
+    }
+  }
 
-	// Keep counter updated
-	$btn.attr("count", breaks.length);
-
-	// Recur if the visible list is still overflowing the nav
-	if($vlinks.width() > availableSpace ) {
-		updateNav();
-	}
+  if ($vlinks.width() > availableSpace) {
+    updateNav();
+  }
 }
 
-// Window listeners
 
 $(window).resize(function() {
-    updateNav();
+  updateNav();
 });
 
 $btn.on('click', function() {
@@ -118,50 +101,61 @@ $btn.on('click', function() {
 
 const $block = $('.conversion');
 const $header__menu = $('.main-header__menu');
-const $bottom_block = $(".box--holder");
+const $bottom_block = $(".conversion+div");
 window.addEventListener('scroll', () => {
-    const { top } = $block[0].getBoundingClientRect();
-    let menuHeight = $header__menu.height();
-    let is = top === menuHeight;
-    if ($block.hasClass('is-fixed')) {
-        if (!is) {
-            $block.removeClass('is-fixed');
-            $bottom_block.css({ 'margin-top': 0 });
-        }
-    } else {
-        if (is) {
-            let h1 = $block.height();
-            $block.addClass('is-fixed');
-            $bottom_block.css({ 'margin-top': h1 - $block.height() });
-        }
+  const {
+    top
+  } = $block[0].getBoundingClientRect();
+  let menuHeight = $header__menu.height();
+  let is = top <= menuHeight;
+  console.log(top);
+  console.log(menuHeight)
+  if ($block.hasClass('is-fixed')) {
+    if (!is) {
+      $block.removeClass('is-fixed');
+      $bottom_block.css({
+        'margin-top': 0
+      });
     }
-    updateNav();
+  } else {
+    if (is) {
+      let h1 = $block.height();
+      $block.addClass('is-fixed');
+      $bottom_block.css({
+        'margin-top': h1 - $block.height()
+      });
+    }
+  }
+  updateNav();
 });
 
 
 updateNav();
 
 $('.conversion__nav').on("click", ".conversion__link", function() {
-	let elems = $('.conversion__link');
-	elems.each(function(index, item) {
-		$(item).removeClass('conversion__link--active')
-	});
-	$(this).addClass('conversion__link--active');
-	var target = $(this).attr('href');
-	$('html, body').animate({
-		scrollTop: $(target).offset().top - $('.main-header__menu').height() - $('.conversion').height()
-	}, 800);
-	return false;
+    stopWatchingObserver = true;
+  let elems = $('.conversion__link');
+  elems.each(function(index, item) {
+    $(item).removeClass('conversion__link--active')
+  });
+  $(this).addClass('conversion__link--active');
+  var target = $(this).attr('href');
+  
+  $('html, body').animate({
+
+    scrollTop: $(target).offset().top - $('.main-header__menu').height() - $('.conversion').height()
+  }, 800, function() {
+    stopWatchingObserver = false;
+  });
+  return false;
 });
 
-$('.conversion .main-nav__toggle').on('click', function () {
-    $('.conversion .line-burger').toggleClass('line-active');
-    $('.visible-links').slideToggle();
-});
-
-
-
-
+if(window.matchMedia('(max-width: 1350px)').matches) {
+    $('.conversion .hamburger_wraper').on('click', function () {
+        $('.conversion .hamburger').toggleClass('line-active');
+        $('.visible-links').slideToggle();
+    });
+}
 
 
 // faq items
